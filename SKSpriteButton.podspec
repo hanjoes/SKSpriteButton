@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'SKSpriteButton'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of SKSpriteButton.'
+  s.summary          = 'Button implemented using SpriteKit.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,7 +18,8 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+This framework implements the Button widget which is very common but
+missing from SpriteKit.
                        DESC
 
   s.homepage         = 'https://github.com/hanjoes/SKSpriteButton'
