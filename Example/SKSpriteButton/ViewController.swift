@@ -1,23 +1,22 @@
-//
-//  ViewController.swift
-//  SKSpriteButton
-//
-//  Created by hanjoes on 10/01/2017.
-//  Copyright (c) 2017 hanjoes. All rights reserved.
-//
-
+import SpriteKit
 import UIKit
 
 class ViewController: UIViewController {
+    
+    let SceneName = "SKSpriteButtonTestScene"
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        if let view = self.view as! SKView? {
+            if let scene = SKScene(fileNamed: SceneName) {
+                view.presentScene(scene)
+            }
+            
+            view.ignoresSiblingOrder = true
+            view.showsFPS = true
+            view.showsNodeCount = true
+        }
     }
 
 }

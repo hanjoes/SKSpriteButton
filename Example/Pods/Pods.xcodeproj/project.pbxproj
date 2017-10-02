@@ -14,7 +14,7 @@
 		5A13499BBA35057F9A901F289BA6052E /* Pods-SKSpriteButton_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F41FAB99E35D40D886A440FFD1487501 /* Pods-SKSpriteButton_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		90C83D2BB85805366BAB1BB07493BEE9 /* Pods-SKSpriteButton_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 45C3A33CF96A24C192D91E8D0975C90F /* Pods-SKSpriteButton_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D17F2B827590BE2B31FE2F4F5B3DB9E0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
-		EB599F0E06F8FA8E84E8A2637F6380AB /* ReplaceMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE566D3D451D7EE6E1A3065CA563771 /* ReplaceMe.swift */; };
+		EB599F0E06F8FA8E84E8A2637F6380AB /* SKSpriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE566D3D451D7EE6E1A3065CA563771 /* SKSpriteButton.swift */; };
 		F5879EB10C98B638BD4FD997F23D59CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		FE6C2ECCA345F3FC3A694683EBEF6CCF /* Pods-SKSpriteButton_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A305571807622F3EF260EDB73245EE /* Pods-SKSpriteButton_Example-dummy.m */; };
 /* End PBXBuildFile section */
@@ -30,10 +30,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		065B533433E844E7E494E3539B05E871 /* SKSpriteButton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SKSpriteButton.framework; path = SKSpriteButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		065B533433E844E7E494E3539B05E871 /* SKSpriteButton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SKSpriteButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		07ACB47934BC683D7842CB57AABC3A8E /* Pods-SKSpriteButton_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SKSpriteButton_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		1827C39A600C74E2489D258F937C3713 /* SKSpriteButton-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SKSpriteButton-prefix.pch"; sourceTree = "<group>"; };
-		1CD0523FB1CF00745D0FE5DCFA243854 /* Pods-SKSpriteButton_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-SKSpriteButton_Tests.modulemap"; sourceTree = "<group>"; };
+		1CD0523FB1CF00745D0FE5DCFA243854 /* Pods-SKSpriteButton_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-SKSpriteButton_Tests.modulemap"; sourceTree = "<group>"; };
 		2A0150585C87516995E94D2A9910C275 /* Pods-SKSpriteButton_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SKSpriteButton_Tests-frameworks.sh"; sourceTree = "<group>"; };
 		2E9F2B8183FA40C3001646B6A5B1763D /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4484F9527BF3561F6B7712A92F06DCFB /* Pods-SKSpriteButton_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SKSpriteButton_Example-frameworks.sh"; sourceTree = "<group>"; };
@@ -45,19 +45,19 @@
 		68D0B54CBDA3B5E398742573C854BA08 /* Pods-SKSpriteButton_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SKSpriteButton_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		6A2D29C2CE803A03956D68212E47841D /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BA9D455AEF68B7AEE8ED6B0865CE767 /* SKSpriteButton-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SKSpriteButton-umbrella.h"; sourceTree = "<group>"; };
-		6EE566D3D451D7EE6E1A3065CA563771 /* ReplaceMe.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReplaceMe.swift; path = SKSpriteButton/Classes/ReplaceMe.swift; sourceTree = "<group>"; };
+		6EE566D3D451D7EE6E1A3065CA563771 /* SKSpriteButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SKSpriteButton.swift; path = SKSpriteButton/Classes/SKSpriteButton.swift; sourceTree = "<group>"; };
 		83E85D91B55E81E23D4D8ED341B9EB06 /* SKSpriteButton.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SKSpriteButton.xcconfig; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		986D388CDCF7C66381CEDF1742B40B2F /* Pods-SKSpriteButton_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SKSpriteButton_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		9965B74928F86E2608FF5940F8AB9273 /* Pods-SKSpriteButton_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SKSpriteButton_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		9DF8678BF4430E75AA496C5D70702A58 /* Pods-SKSpriteButton_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SKSpriteButton_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		9F68A49F18622C0B9D6B4D1323688F25 /* SKSpriteButton.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = SKSpriteButton.modulemap; sourceTree = "<group>"; };
+		9F68A49F18622C0B9D6B4D1323688F25 /* SKSpriteButton.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SKSpriteButton.modulemap; sourceTree = "<group>"; };
 		AD9C5C3E781C19949E0638A07EB37063 /* Pods-SKSpriteButton_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SKSpriteButton_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		B4A613EA17EE9D44E8EA0525EDF82B2B /* Pods-SKSpriteButton_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SKSpriteButton_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
-		B7CF19696228220A8771C36500975400 /* Pods-SKSpriteButton_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-SKSpriteButton_Example.modulemap"; sourceTree = "<group>"; };
+		B7CF19696228220A8771C36500975400 /* Pods-SKSpriteButton_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-SKSpriteButton_Example.modulemap"; sourceTree = "<group>"; };
 		C001BEBC120A02F529DFAE161E1D7270 /* Pods-SKSpriteButton_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SKSpriteButton_Tests-dummy.m"; sourceTree = "<group>"; };
-		C02673A7E5A7DE3054B50F38B83E1ABC /* Pods_SKSpriteButton_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_SKSpriteButton_Tests.framework; path = "Pods-SKSpriteButton_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C2C183D9F001FD6A24DFC227EA0ECF45 /* Pods_SKSpriteButton_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_SKSpriteButton_Example.framework; path = "Pods-SKSpriteButton_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C02673A7E5A7DE3054B50F38B83E1ABC /* Pods_SKSpriteButton_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SKSpriteButton_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2C183D9F001FD6A24DFC227EA0ECF45 /* Pods_SKSpriteButton_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SKSpriteButton_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2857599A2796F61D13AA01B93793E0E /* Pods-SKSpriteButton_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SKSpriteButton_Example-resources.sh"; sourceTree = "<group>"; };
 		F41FAB99E35D40D886A440FFD1487501 /* Pods-SKSpriteButton_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SKSpriteButton_Tests-umbrella.h"; sourceTree = "<group>"; };
 		FD31777A1BF5A9D548BF511B57B32B03 /* Pods-SKSpriteButton_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SKSpriteButton_Tests-resources.sh"; sourceTree = "<group>"; };
@@ -113,7 +113,7 @@
 		799EEB1CA932854F4604EA718D31DB48 /* SKSpriteButton */ = {
 			isa = PBXGroup;
 			children = (
-				6EE566D3D451D7EE6E1A3065CA563771 /* ReplaceMe.swift */,
+				6EE566D3D451D7EE6E1A3065CA563771 /* SKSpriteButton.swift */,
 				F3C1FDDBB502C15EE3AD5F10B0033BB1 /* Support Files */,
 			);
 			name = SKSpriteButton;
@@ -295,7 +295,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0900;
+				TargetAttributes = {
+					F0EEBD9C3D56E5CD19AA33E4F89EC420 = {
+						LastSwiftMigration = 0900;
+					};
+				};
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -337,7 +342,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB599F0E06F8FA8E84E8A2637F6380AB /* ReplaceMe.swift in Sources */,
+				EB599F0E06F8FA8E84E8A2637F6380AB /* SKSpriteButton.swift in Sources */,
 				3931A32A659DA93914D3909A02F4B8DC /* SKSpriteButton-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -456,7 +461,8 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -473,7 +479,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -481,14 +489,20 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"POD_CONFIGURATION_RELEASE=1",
 					"$(inherited)",
@@ -502,6 +516,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SYMROOT = "${SRCROOT}/../build";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -610,7 +625,8 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -627,7 +643,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -635,15 +653,21 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"POD_CONFIGURATION_DEBUG=1",
