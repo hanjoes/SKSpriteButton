@@ -12,7 +12,7 @@ class SKSpriteButtonTestScene: SKScene {
     override func didMove(to view: SKView) {
         testButton1.addTouchesBeganHandler(handler: self.button1TouchBeganHandler0)
         testButton1.addTouchesBeganHandler(handler: self.button1TouchBeganHandler1)
-        testButton1.addTouchesEndedHandlers(handler: self.button1TouchCancelledHandler0)
+        testButton1.addTouchesEndedHandler(handler: self.button1TouchCancelledHandler0)
         
         testButton1.tappedColor = .purple
     }
