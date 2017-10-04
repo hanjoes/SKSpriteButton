@@ -10,12 +10,11 @@ class ViewController: UIViewController {
         
         if let view = self.view as! SKView? {
             if let scene = SKScene(fileNamed: SceneName) {
+                scene.scaleMode = SKSceneScaleMode.aspectFit
                 view.presentScene(scene)
             }
             
             view.ignoresSiblingOrder = true
-            view.showsFPS = true
-            view.showsNodeCount = true
         }
     }
 
