@@ -87,7 +87,6 @@ extension SKSpriteButton {
     }
     
     public override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        status = .normal
         touchesMovedHandlers.forEach {
             handler in
             handler(touches, event)
