@@ -34,15 +34,19 @@ class SKSpriteButtonTestScene: SKScene {
     override func didMove(to view: SKView) {
         testButton1.isUserInteractionEnabled = true
         testButton1.tappedColor = testButton1.color.inverted()
+        testButton1.moveType = .releaseFast
         
         testButton2.isUserInteractionEnabled = true
         testButton2.tappedColor = testButton2.color.inverted()
+        testButton2.moveType = .releaseOut
         
         testButton3.isUserInteractionEnabled = true
         testButton3.tappedColor = testButton3.color.inverted()
+        testButton3.moveType = .reentry
         
         testButton4.isUserInteractionEnabled = true
         testButton4.tappedTexture = SKTexture(imageNamed: ButtonTappedTexture)
+        testButton4.moveType = .alwaysHeld
     }
 }
 
