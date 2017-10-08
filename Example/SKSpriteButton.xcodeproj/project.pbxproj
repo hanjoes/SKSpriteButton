@@ -15,8 +15,8 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		DB6D329E1F81F4C100DA828C /* SKSpriteButtonTestScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DB6D329D1F81F4C100DA828C /* SKSpriteButtonTestScene.sks */; };
-		DB6D32A21F81F82400DA828C /* SKSpriteButtonTestScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6D32A11F81F82400DA828C /* SKSpriteButtonTestScene.swift */; };
+		DB6D329E1F81F4C100DA828C /* SKSpriteButtonDemoScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DB6D329D1F81F4C100DA828C /* SKSpriteButtonDemoScene.sks */; };
+		DB6D32A21F81F82400DA828C /* SKSpriteButtonDemoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6D32A11F81F82400DA828C /* SKSpriteButtonDemoScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,9 +49,9 @@
 		923A9C2535B558D1B1F7732A /* Pods_SKSpriteButton_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SKSpriteButton_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C413D87497850ADBE5344CC7 /* Pods-SKSpriteButton_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SKSpriteButton_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SKSpriteButton_Tests/Pods-SKSpriteButton_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		CF2B93D0FF6AB1A874F2EA68 /* SKSpriteButton.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SKSpriteButton.podspec; path = ../SKSpriteButton.podspec; sourceTree = "<group>"; };
-		DB6D329D1F81F4C100DA828C /* SKSpriteButtonTestScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SKSpriteButtonTestScene.sks; sourceTree = "<group>"; };
+		DB6D329D1F81F4C100DA828C /* SKSpriteButtonDemoScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SKSpriteButtonDemoScene.sks; sourceTree = "<group>"; };
 		DB6D32A01F81F52500DA828C /* SKSpriteButton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SKSpriteButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DB6D32A11F81F82400DA828C /* SKSpriteButtonTestScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKSpriteButtonTestScene.swift; sourceTree = "<group>"; };
+		DB6D32A11F81F82400DA828C /* SKSpriteButtonDemoScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKSpriteButtonDemoScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,7 +121,7 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
-				DB6D32A11F81F82400DA828C /* SKSpriteButtonTestScene.swift */,
+				DB6D32A11F81F82400DA828C /* SKSpriteButtonDemoScene.swift */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
 			name = "Example for SKSpriteButton";
@@ -135,7 +135,7 @@
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD41AFB9204008FA782 /* Info.plist */,
-				DB6D329D1F81F4C100DA828C /* SKSpriteButtonTestScene.sks */,
+				DB6D329D1F81F4C100DA828C /* SKSpriteButtonDemoScene.sks */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -257,7 +257,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
-				DB6D329E1F81F4C100DA828C /* SKSpriteButtonTestScene.sks in Resources */,
+				DB6D329E1F81F4C100DA828C /* SKSpriteButtonDemoScene.sks in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
@@ -380,7 +380,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
-				DB6D32A21F81F82400DA828C /* SKSpriteButtonTestScene.swift in Sources */,
+				DB6D32A21F81F82400DA828C /* SKSpriteButtonDemoScene.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

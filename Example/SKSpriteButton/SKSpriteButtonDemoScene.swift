@@ -1,7 +1,7 @@
 import SpriteKit
 import SKSpriteButton
 
-class SKSpriteButtonTestScene: SKScene {
+class SKSpriteButtonDemoScene: SKScene {
     
     let TestButton1Key = "TestButton1"
     let TestButton2Key = "TestButton2"

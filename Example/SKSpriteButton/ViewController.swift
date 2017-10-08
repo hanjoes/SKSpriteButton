@@ -3,7 +3,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let SceneName = "SKSpriteButtonTestScene"
+    let SceneName = "SKSpriteButtonDemoScene"
 
     override func viewDidLoad() {
         super.viewDidLoad()
