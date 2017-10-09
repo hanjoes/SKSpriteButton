@@ -31,7 +31,7 @@ public class SKSpriteButton: SKSpriteNode {
     /// There are 3 types of move type.
     ///
     /// - __alwaysHeld__: button won't be considered "released"
-    /// until user lift the tap.
+    /// until user lift the tap. (default)
     /// - __releaseOut__: button won't be considered "up"
     /// unless user lift the tap or all touches are moved
     /// out of the button frame.
@@ -181,6 +181,9 @@ private extension SKSpriteButton {
     }
     
     func touchesCancelled(_ touches: Set<UITouch>, _ event: UIEvent?) {
+        guard status == .tapped else {
+            return
+        }
         invokeTouchesCancelledBehavior(touches, event)
     }
 }
@@ -218,6 +221,9 @@ private extension SKSpriteButton {
     }
     
     func showTappedTexture() {
+        // doesn't make sense to show tapped texture if it doesn't have texture initially
+        guard let _ = texture else { return }
+        
         if let tappedTexture = tappedTexture {
             storedNormalTexture = texture
             texture = tappedTexture
