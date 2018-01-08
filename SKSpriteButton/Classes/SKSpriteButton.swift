@@ -47,11 +47,24 @@ public class SKSpriteButton: SKSpriteNode {
         case reentry
     }
     
+    /// Used to prevent touch recognition
+    /// Will show the disabled texture and disabled color
+    public var disabled: Bool = false {
+        willSet {
+            isUserInteractionEnabled = !disabled
+            if disabled {
+                showDisabledAppearance()
+            } else {
+                showNormalAppearance()
+            }
+        }
+    }
+    
     /// The `SKSpriteButton.MoveType` of this button.
     /// Default to `.alwaysHeld`.
     public var moveType: MoveType = .alwaysHeld {
         willSet {
-            isUserInteractionEnabled = true
+            isUserInteractionEnabled = !disabled
         }
     }
     
@@ -59,19 +72,76 @@ public class SKSpriteButton: SKSpriteNode {
     /// Closure can be added to this button for specific events by calling
     /// `add*` methods.
     public typealias EventHandler = (Set<UITouch>, UIEvent?) -> Void
-
+    
+    // Maintain a copy of the new normal texture so that it can be restored
+    override public var texture: SKTexture? {
+        didSet {
+            storedNormalTexture = texture
+        }
+    }
+    
+    // Maintain a copy of the new normal color so that it can be restored
+    override public var color: UIColor {
+        didSet {
+            storedNormalColor = color
+        }
+    }
+    
     /// Set this variable if you want to display a
     /// different texture when the button is tapped.
     public var tappedTexture: SKTexture? {
         willSet {
-            isUserInteractionEnabled = true
+            isUserInteractionEnabled = !disabled
+        }
+        didSet {
+            // more than one texture is associated with node so keep of copy of the normal texture
+            if storedNormalTexture == nil {
+                storedNormalTexture = texture
+            }
         }
     }
     
     /// Color to display when a button is tapped.
     public var tappedColor: UIColor? {
         willSet {
-            isUserInteractionEnabled = true
+            isUserInteractionEnabled = !disabled
+        }
+        didSet {
+            // more than one color is associated with node so keep of copy of the normal color
+            if storedNormalColor == nil {
+                storedNormalColor = color
+            }
+        }
+    }
+    
+    /// Set this variable if you want to display a
+    /// different texture when the button is disabled.
+    public var disabledTexture: SKTexture? {
+        willSet {
+            isUserInteractionEnabled = !disabled
+        }
+        didSet {
+            if storedNormalTexture == nil {
+                storedNormalTexture = texture
+            }
+            if disabled {
+                showDisabledTexture()
+            }
+        }
+    }
+    
+    /// Color to display when a button is disabled.
+    public var disabledColor: UIColor? {
+        willSet {
+            isUserInteractionEnabled = !disabled
+        }
+        didSet {
+            if storedNormalColor == nil {
+                storedNormalColor = color
+            }
+            if disabled {
+                showDisabledColor()
+            }
         }
     }
     
@@ -201,6 +271,11 @@ private extension SKSpriteButton {
         showTappedTexture()
     }
     
+    func showDisabledAppearance() {
+        showDisabledColor()
+        showDisabledTexture()
+    }
+    
     func showNormalColor() {
         if let storedNormalColor = storedNormalColor {
             color = storedNormalColor
@@ -213,9 +288,22 @@ private extension SKSpriteButton {
         }
     }
     
+    func showDisabledColor() {
+        if let disabledColor = disabledColor {
+            color = disabledColor
+        }
+    }
+    
+    func showDisabledTexture() {
+        guard let _ = texture else { return }
+        
+        if let disabledTexture = disabledTexture {
+            texture = disabledTexture
+        }
+    }
+    
     func showTappedColor() {
         if let tappedColor = tappedColor {
-            storedNormalColor = color
             color = tappedColor
         }
     }
@@ -225,7 +313,6 @@ private extension SKSpriteButton {
         guard let _ = texture else { return }
         
         if let tappedTexture = tappedTexture {
-            storedNormalTexture = texture
             texture = tappedTexture
         }
     }
