@@ -55,20 +55,21 @@ public class SKSpriteButton: SKSpriteNode {
     /// Used to prevent touch recognition
     /// Will show the disabled texture and disabled color
     public var disabled: Bool = false {
-        willSet {
+        didSet {
             isUserInteractionEnabled = !disabled
             if disabled {
                 showDisabledAppearance()
             } else {
                 showNormalAppearance()
             }
+            
         }
     }
     
     /// The `SKSpriteButton.MoveType` of this button.
     /// Default to `.alwaysHeld`.
     public var moveType: MoveType = .alwaysHeld {
-        willSet {
+        didSet {
             isUserInteractionEnabled = !disabled
         }
     }
@@ -95,10 +96,8 @@ public class SKSpriteButton: SKSpriteNode {
     /// Set this variable if you want to display a
     /// different texture when the button is tapped.
     public var tappedTexture: SKTexture? {
-        willSet {
-            isUserInteractionEnabled = !disabled
-        }
         didSet {
+            isUserInteractionEnabled = !disabled
             // more than one texture is associated with node so keep of copy of the normal texture
             if storedNormalTexture == nil {
                 storedNormalTexture = texture
@@ -108,10 +107,8 @@ public class SKSpriteButton: SKSpriteNode {
     
     /// Color to display when a button is tapped.
     public var tappedColor: UIColor? {
-        willSet {
-            isUserInteractionEnabled = !disabled
-        }
         didSet {
+            isUserInteractionEnabled = !disabled
             // more than one color is associated with node so keep of copy of the normal color
             if storedNormalColor == nil {
                 storedNormalColor = color
@@ -122,10 +119,8 @@ public class SKSpriteButton: SKSpriteNode {
     /// Set this variable if you want to display a
     /// different texture when the button is disabled.
     public var disabledTexture: SKTexture? {
-        willSet {
-            isUserInteractionEnabled = !disabled
-        }
         didSet {
+            isUserInteractionEnabled = !disabled
             if storedNormalTexture == nil {
                 storedNormalTexture = texture
             }
@@ -137,10 +132,8 @@ public class SKSpriteButton: SKSpriteNode {
     
     /// Color to display when a button is disabled.
     public var disabledColor: UIColor? {
-        willSet {
-            isUserInteractionEnabled = !disabled
-        }
         didSet {
+            isUserInteractionEnabled = !disabled
             if storedNormalColor == nil {
                 storedNormalColor = color
             }
@@ -425,5 +418,4 @@ private extension SKSpriteButton {
         return true
     }
 }
-
 
