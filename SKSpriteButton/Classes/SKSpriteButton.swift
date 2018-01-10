@@ -48,7 +48,16 @@ public class SKSpriteButton: SKSpriteNode {
     }
     
     // Button becomes a toggle switch that switches between normal and tapped
-    public var toggleMode: Bool = false
+    public var isToggleMode: Bool = false {
+        didSet {
+            // Run again in case isToggleOn set first
+            if isToggledOn {
+                showTappedAppearance()
+            } else {
+                showNormalAppearance()
+            }
+        }
+    }
     
     public var isToggledOn: Bool = false {
         didSet {
@@ -290,7 +299,11 @@ private extension SKSpriteButton {
             return
         }
         
-        invokeTouchesUpBehavior(touches, event)
+        if isToggleMode {
+            invokeToggleBehavior(touches, event)
+        } else {
+            invokeTouchesUpBehavior(touches, event)
+        }
     }
     
     func touchesCancelled(_ touches: Set<UITouch>, _ event: UIEvent?) {
@@ -369,37 +382,7 @@ private extension SKSpriteButton {
     }
     
     func invokeTouchesUpBehavior(_ touches: Set<UITouch>, _ event: UIEvent?) {
-        if toggleMode {
-            if isToggledOn {
-                // Group toogle cannot self toggle off
-                if toggleGroup.count > 0 {
-                    return
-                }
-                
-                triggerToggledOff()
-                
-                toggleOffHandlers.forEach {
-                    handler in
-                    handler(touches, event)
-                }
-                
-            } else {
-                triggerToggledOn()
-                
-                for button in toggleGroup {
-                    button.isToggledOn = false
-                }
-                
-                toggleOnHandlers.forEach {
-                    handler in
-                    handler(touches, event)
-                }
-                
-            }
-        } else {
-            triggerNormal()
-        }
-        
+        triggerNormal()
         touchesUpHandlers.forEach {
             handler in
             handler(touches, event)
@@ -419,6 +402,40 @@ private extension SKSpriteButton {
             handler in
             handler(touches, event)
         }
+    }
+    
+    func invokeToggleBehavior(_ touches: Set<UITouch>, _ event: UIEvent?) {
+        if isToggledOn {
+            // Group toogle cannot self toggle off
+            if toggleGroup.count > 0 {
+                return
+            }
+            
+            triggerToggledOff()
+            
+            toggleOffHandlers.forEach {
+                handler in
+                handler(touches, event)
+            }
+            
+        } else {
+            triggerToggledOn()
+            
+            for button in toggleGroup {
+                button.isToggledOn = false
+            }
+            
+            toggleOnHandlers.forEach {
+                handler in
+                handler(touches, event)
+            }
+        }
+        
+        touchesUpHandlers.forEach {
+            handler in
+            handler(touches, event)
+        }
+        
     }
     
     func triggerNormal() {
@@ -453,5 +470,6 @@ private extension SKSpriteButton {
         }
         return true
     }
+    
 }
 
