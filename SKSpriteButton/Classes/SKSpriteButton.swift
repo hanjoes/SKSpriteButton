@@ -50,7 +50,17 @@ public class SKSpriteButton: SKSpriteNode {
     // Button becomes a toggle switch that switches between normal and tapped
     public var toggleMode: Bool = false
     
-    public var isToggledOn: Bool = false
+    public var isToggledOn: Bool = false {
+        didSet {
+            // Don't call handlers as this is not an action when set manually
+            // this is necessary when having a group of buttons to toggle each other
+            if isToggledOn {
+                showTappedAppearance()
+            } else {
+                showNormalAppearance()
+            }
+        }
+    }
     
     /// Used to prevent touch recognition
     /// Will show the disabled texture and disabled color
