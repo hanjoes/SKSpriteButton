@@ -169,6 +169,10 @@ public class SKSpriteButton: SKSpriteNode {
     
     internal var toggleOffHandlers = [EventHandler]()
     
+    // This is tightly controlled as it's not intended for anyother purpose than
+    // to toogle the associated buttons in the opposite direction to this button
+    internal var toggleGroup = Set<SKSpriteButton>()
+    
     /// Add a method handler for `toggleOn` event.
     ///
     /// - Parameter handler: a closure conforms to `SKSpriteButton.EventHandler`.
@@ -177,6 +181,8 @@ public class SKSpriteButton: SKSpriteNode {
     }
     
     /// Add a method handler for `toggleOn` event.
+    /// If this will not get called when a toggle group is added, you will have to
+    /// manage the off action of this button with the on actions of the group buttons
     ///
     /// - Parameter handler: a closure conforms to `SKSpriteButton.EventHandler`.
     public func addToggleOffHandler(handler: @escaping EventHandler) {
@@ -235,6 +241,17 @@ extension SKSpriteButton {
         touchesMoved(touches, event)
     }
     
+}
+
+// MARK: - Group buttons together when toggling
+extension SKSpriteButton {
+    public func addToggleGroup(button:SKSpriteButton) {
+        toggleGroup.insert(button)
+    }
+    
+    public func removeToggleGroup(button:SKSpriteButton) {
+        toggleGroup.remove(button)
+    }
 }
 
 // MARK: - Custom Event Layer
@@ -354,6 +371,11 @@ private extension SKSpriteButton {
     func invokeTouchesUpBehavior(_ touches: Set<UITouch>, _ event: UIEvent?) {
         if toggleMode {
             if isToggledOn {
+                // Group toogle cannot self toggle off
+                if toggleGroup.count > 0 {
+                    return
+                }
+                
                 triggerToggledOff()
                 
                 toggleOffHandlers.forEach {
@@ -363,6 +385,10 @@ private extension SKSpriteButton {
                 
             } else {
                 triggerToggledOn()
+                
+                for button in toggleGroup {
+                    button.isToggledOn = false
+                }
                 
                 toggleOnHandlers.forEach {
                     handler in
