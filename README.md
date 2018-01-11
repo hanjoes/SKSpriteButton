@@ -52,8 +52,8 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 __Note:__ I've actually included all files needed to compile the project in the git repo. You should be able to run the example even without `pod install`.
 
-### Createing a group of toggled (radio) buttons
-Use this when you want to create a group of radio buttons so that when one is selected (toggled on) the others will be deselected (toggled off). Note that when a group is created, then toggleOffHandlers will not be called.
+### Creating a group of toggled (radio) buttons
+Use this when you want to create a group of radio buttons so that when one is selected (toggled on), the others will be deselected (toggled off). Note that when a group is created, then toggledOffHandlers will not be called.
 
 ```
     firstButton = SKSpriteButton(imageNamed:"InActive")
