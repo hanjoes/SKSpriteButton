@@ -71,3 +71,7 @@ hanjoes, hanzhou87@gmail.com
 
 SKSpriteButton is available under the MIT license. See the LICENSE file for more info.
 
+## Contributors
+
+hanjoes
+nader-eloshaiker
