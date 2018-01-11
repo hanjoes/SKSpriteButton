@@ -58,16 +58,18 @@ Use this when you want to create a group of radio buttons so that when one is se
 ```
     firstButton = SKSpriteButton(imageNamed:"InActive")
     firstButton.tappedTexture = SKTexture(imageNamed: "Active")
-    firstButton.toggleMode = true
-    firstButton.isToggledOn = true
+    firstButton.isToggleMode = true
+    firstButton.isToggledOn = true      // Preload state
+    
     // The assigned handler should not only handle firstButton toggled on
     // but all other buttons in the group being toggled off
     firstButton.addToggleOnHandler(handler: self.showTab1)  
     
     secondButton =  SKSpriteButton(imageNamed:"InActive")
     secondButton.tappedTexture = SKTexture(imageNamed: "Active")
-    secondButton.toggleMode = true
-    secondButton.isToggledOn = false
+    secondButton.isToggleMode = true
+    secondButton.isToggledOn = false      // Preload state
+    
     // The assigned handler should not only handle secondButton toggled on
     // but all other buttons in the group being toggled off
     secondButton.addToggleOnHandler(handler: self.showTab2)
