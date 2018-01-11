@@ -47,11 +47,49 @@ public class SKSpriteButton: SKSpriteNode {
         case reentry
     }
     
+    // Button becomes a toggle switch that switches between normal and tapped
+    public var isToggleMode: Bool = false {
+        didSet {
+            // Run again in case isToggleOn set first
+            if isToggledOn {
+                showTappedAppearance()
+            } else {
+                showNormalAppearance()
+            }
+        }
+    }
+    
+    public var isToggledOn: Bool = false {
+        didSet {
+            // Don't call handlers as this is not an action when set manually
+            // this is necessary when having a group of buttons to toggle each other
+            if isToggledOn {
+                showTappedAppearance()
+            } else {
+                showNormalAppearance()
+            }
+        }
+    }
+    
+    /// Used to prevent touch recognition
+    /// Will show the disabled texture and disabled color
+    public var disabled: Bool = false {
+        didSet {
+            isUserInteractionEnabled = !disabled
+            if disabled {
+                showDisabledAppearance()
+            } else {
+                showNormalAppearance()
+            }
+            
+        }
+    }
+    
     /// The `SKSpriteButton.MoveType` of this button.
     /// Default to `.alwaysHeld`.
     public var moveType: MoveType = .alwaysHeld {
-        willSet {
-            isUserInteractionEnabled = true
+        didSet {
+            isUserInteractionEnabled = !disabled
         }
     }
     
@@ -59,26 +97,75 @@ public class SKSpriteButton: SKSpriteNode {
     /// Closure can be added to this button for specific events by calling
     /// `add*` methods.
     public typealias EventHandler = (Set<UITouch>, UIEvent?) -> Void
-
+    
+    // Maintain a copy of the new normal texture so that it can be restored
+    override public var texture: SKTexture? {
+        didSet {
+            storedNormalTexture = texture
+        }
+    }
+    
+    // Maintain a copy of the new normal color so that it can be restored
+    override public var color: UIColor {
+        didSet {
+            storedNormalColor = color
+        }
+    }
+    
     /// Set this variable if you want to display a
     /// different texture when the button is tapped.
     public var tappedTexture: SKTexture? {
-        willSet {
-            isUserInteractionEnabled = true
+        didSet {
+            isUserInteractionEnabled = !disabled
+            // more than one texture is associated with node so keep of copy of the normal texture
+            if storedNormalTexture == nil {
+                storedNormalTexture = texture
+            }
         }
     }
     
     /// Color to display when a button is tapped.
     public var tappedColor: UIColor? {
-        willSet {
-            isUserInteractionEnabled = true
+        didSet {
+            isUserInteractionEnabled = !disabled
+            // more than one color is associated with node so keep of copy of the normal color
+            if storedNormalColor == nil {
+                storedNormalColor = color
+            }
+        }
+    }
+    
+    /// Set this variable if you want to display a
+    /// different texture when the button is disabled.
+    public var disabledTexture: SKTexture? {
+        didSet {
+            isUserInteractionEnabled = !disabled
+            if storedNormalTexture == nil {
+                storedNormalTexture = texture
+            }
+            if disabled {
+                showDisabledTexture()
+            }
+        }
+    }
+    
+    /// Color to display when a button is disabled.
+    public var disabledColor: UIColor? {
+        didSet {
+            isUserInteractionEnabled = !disabled
+            if storedNormalColor == nil {
+                storedNormalColor = color
+            }
+            if disabled {
+                showDisabledColor()
+            }
         }
     }
     
     internal var storedNormalColor: UIColor?
     
     internal var storedNormalTexture: SKTexture?
-
+    
     internal var touchesBeganHandlers = [EventHandler]()
     
     internal var touchesUpHandlers = [EventHandler]()
@@ -86,6 +173,30 @@ public class SKSpriteButton: SKSpriteNode {
     internal var touchesCancelledHandlers = [EventHandler]()
     
     internal var touchesMovedHandlers = [EventHandler]()
+    
+    internal var toggleOnHandlers = [EventHandler]()
+    
+    internal var toggleOffHandlers = [EventHandler]()
+    
+    // This is tightly controlled as it's not intended for anyother purpose than
+    // to toogle the associated buttons in the opposite direction to this button
+    internal var toggleGroup = Set<SKSpriteButton>()
+    
+    /// Add a method handler for `toggleOn` event.
+    ///
+    /// - Parameter handler: a closure conforms to `SKSpriteButton.EventHandler`.
+    public func addToggleOnHandler(handler: @escaping EventHandler) {
+        toggleOnHandlers.append(handler)
+    }
+    
+    /// Add a method handler for `toggleOn` event.
+    /// If this will not get called when a toggle group is added, you will have to
+    /// manage the off action of this button with the on actions of the group buttons
+    ///
+    /// - Parameter handler: a closure conforms to `SKSpriteButton.EventHandler`.
+    public func addToggleOffHandler(handler: @escaping EventHandler) {
+        toggleOffHandlers.append(handler)
+    }
     
     /// Add a method handler for `touchesBegan` event.
     ///
@@ -138,7 +249,18 @@ extension SKSpriteButton {
     public override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         touchesMoved(touches, event)
     }
+    
+}
 
+// MARK: - Group buttons together when toggling
+extension SKSpriteButton {
+    public func addToggleGroup(button:SKSpriteButton) {
+        toggleGroup.insert(button)
+    }
+    
+    public func removeToggleGroup(button:SKSpriteButton) {
+        toggleGroup.remove(button)
+    }
 }
 
 // MARK: - Custom Event Layer
@@ -177,7 +299,11 @@ private extension SKSpriteButton {
             return
         }
         
-        invokeTouchesUpBehavior(touches, event)
+        if isToggleMode {
+            invokeToggleBehavior(touches, event)
+        } else {
+            invokeTouchesUpBehavior(touches, event)
+        }
     }
     
     func touchesCancelled(_ touches: Set<UITouch>, _ event: UIEvent?) {
@@ -201,22 +327,40 @@ private extension SKSpriteButton {
         showTappedTexture()
     }
     
+    func showDisabledAppearance() {
+        showDisabledColor()
+        showDisabledTexture()
+    }
+    
     func showNormalColor() {
         if let storedNormalColor = storedNormalColor {
-            color = storedNormalColor
+            super.color = storedNormalColor
         }
     }
     
     func showNormalTexture() {
         if let storedNormalTexture = storedNormalTexture {
-            texture = storedNormalTexture
+            super.texture = storedNormalTexture
+        }
+    }
+    
+    func showDisabledColor() {
+        if let disabledColor = disabledColor {
+            super.color = disabledColor
+        }
+    }
+    
+    func showDisabledTexture() {
+        guard let _ = texture else { return }
+        
+        if let disabledTexture = disabledTexture {
+            super.texture = disabledTexture
         }
     }
     
     func showTappedColor() {
         if let tappedColor = tappedColor {
-            storedNormalColor = color
-            color = tappedColor
+            super.color = tappedColor
         }
     }
     
@@ -225,8 +369,7 @@ private extension SKSpriteButton {
         guard let _ = texture else { return }
         
         if let tappedTexture = tappedTexture {
-            storedNormalTexture = texture
-            texture = tappedTexture
+            super.texture = tappedTexture
         }
     }
     
@@ -261,6 +404,40 @@ private extension SKSpriteButton {
         }
     }
     
+    func invokeToggleBehavior(_ touches: Set<UITouch>, _ event: UIEvent?) {
+        if isToggledOn {
+            // Group toogle cannot self toggle off
+            if toggleGroup.count > 0 {
+                return
+            }
+            
+            triggerToggledOff()
+            
+            toggleOffHandlers.forEach {
+                handler in
+                handler(touches, event)
+            }
+            
+        } else {
+            triggerToggledOn()
+            
+            for button in toggleGroup {
+                button.isToggledOn = false
+            }
+            
+            toggleOnHandlers.forEach {
+                handler in
+                handler(touches, event)
+            }
+        }
+        
+        touchesUpHandlers.forEach {
+            handler in
+            handler(touches, event)
+        }
+        
+    }
+    
     func triggerNormal() {
         status = .normal
         showNormalAppearance()
@@ -269,6 +446,19 @@ private extension SKSpriteButton {
     func triggerTapped() {
         status = .tapped
         showTappedAppearance()
+    }
+    
+    func triggerToggledOff() {
+        status = .normal
+        showNormalAppearance()
+        isToggledOn = false
+    }
+    
+    func triggerToggledOn() {
+        status = .normal
+        showTappedAppearance()
+        isToggledOn = true
+        
     }
     
     func areOutsideOfButtonFrame(_ touches: Set<UITouch>) -> Bool {
@@ -280,4 +470,6 @@ private extension SKSpriteButton {
         }
         return true
     }
+    
 }
+
