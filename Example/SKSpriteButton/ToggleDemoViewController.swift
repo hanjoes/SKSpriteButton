@@ -1,10 +1,10 @@
 import SpriteKit
 import UIKit
 
-class ViewController: UIViewController {
+class ToggleDemoViewController: UIViewController {
     
-    let SceneName = "SKSpriteButtonDemoScene"
-
+    let SceneName = "SKSpriteButtonToggleDemoScene"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -17,6 +17,7 @@ class ViewController: UIViewController {
             view.ignoresSiblingOrder = true
         }
     }
-
+    
 }
+
 

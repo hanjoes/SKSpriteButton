@@ -1,13 +1,13 @@
 import SpriteKit
 import SKSpriteButton
 
-class SKSpriteButtonDemoScene: SKScene {
+class SKSpriteButtonToggleDemoScene: SKScene {
     
     let TestButton1Key = "TestButton1"
     let TestButton2Key = "TestButton2"
     let TestButton3Key = "TestButton3"
     let TestButton4Key = "TestButton4"
-
+    
     let TestLabelKey = "DemoTestLabel"
     let ButtonTappedTexture = "button_white"
     
@@ -50,20 +50,3 @@ class SKSpriteButtonDemoScene: SKScene {
     }
 }
 
-extension UIColor {
-
-    func inverted() -> UIColor {
-        var red: CGFloat = 1.0
-        var green: CGFloat = 1.0
-        var blue: CGFloat = 1.0
-        var alpha: CGFloat = 1.0
-        
-        getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-        
-        red = 1.0 - red
-        green = 1.0 - green
-        blue = 1.0 - blue
-        
-        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
-    }
-}
