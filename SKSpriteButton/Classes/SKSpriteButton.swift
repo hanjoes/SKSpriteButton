@@ -178,9 +178,7 @@ public class SKSpriteButton: SKSpriteNode {
     
     internal var toggleOffHandlers = [EventHandler]()
     
-    /// This is tightly controlled as it's not intended for any other purpose than
-    /// to toggle the associated buttons in the opposite direction to this button.
-    internal var toggleGroup = Set<SKSpriteButton>()
+    internal var buttonGroup: SKSpriteButtonGroup?
     
     /// Add a method handler for `toggleOn` event.
     ///
@@ -250,17 +248,6 @@ extension SKSpriteButton {
         touchesMoved(touches, event)
     }
     
-}
-
-// MARK: - Group buttons together when toggling
-extension SKSpriteButton {
-    public func addToggleGroup(button:SKSpriteButton) {
-        toggleGroup.insert(button)
-    }
-    
-    public func removeToggleGroup(button:SKSpriteButton) {
-        toggleGroup.remove(button)
-    }
 }
 
 // MARK: - Custom Event Layer
@@ -406,8 +393,7 @@ private extension SKSpriteButton {
     
     func invokeToggleBehavior(_ touches: Set<UITouch>, _ event: UIEvent?) {
         if isToggledOn {
-            // Group toggle cannot self toggle off
-            if toggleGroup.count > 0 {
+            if let buttonGroup = buttonGroup, !buttonGroup.buttons.isEmpty {
                 return
             }
             
