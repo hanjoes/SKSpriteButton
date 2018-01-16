@@ -180,6 +180,10 @@ public class SKSpriteButton: SKSpriteNode {
     
     internal var buttonGroup: SKSpriteButtonGroup?
     
+    /// This is tightly controlled as it's not intended for any other purpose than
+    /// to toggle the associated buttons in the opposite direction to this button.
+    internal var toggleGroup = Set<SKSpriteButton>()
+    
     /// Add a method handler for `toggleOn` event.
     ///
     /// - Parameter handler: a closure conforms to `SKSpriteButton.EventHandler`.

@@ -1,3 +1,5 @@
+/// Wrapper for `unowned` reference. Using unowned instead of weak since
+/// it doesn't makes sense for a wrapper to contain `nil` value.
 struct SKUnowned<T: AnyObject & Hashable>: Hashable  {
     var hashValue: Int {
         return value.hashValue * 31
@@ -10,16 +12,22 @@ struct SKUnowned<T: AnyObject & Hashable>: Hashable  {
     unowned var value: T
 }
 
-
-class SKSpriteButtonGroup {
+/// `SKSpriteButtonGroup` is a group of SKSpriteButtons.
+/// It comes in handy in some cases when user wants to have group-specific
+/// behavior. e.g.: mutually exclusive toggle group.
+public class SKSpriteButtonGroup {
     
-    public var buttons = Set<SKUnowned<SKSpriteButton>>()
+    public var buttons: [SKSpriteButton] {
+        return storedButtons.map { $0.value }
+    }
+    
+    private var storedButtons = Set<SKUnowned<SKSpriteButton>>()
     
     public func add(button: SKSpriteButton) {
-        buttons.insert(SKUnowned(value: button))
+        storedButtons.insert(SKUnowned(value: button))
     }
     
     public func remove(button: SKSpriteButton) {
-        buttons.remove(SKUnowned(value: button))
+        storedButtons.remove(SKUnowned(value: button))
     }
 }
