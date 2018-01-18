@@ -6,7 +6,7 @@ struct SKUnowned<T: AnyObject & Hashable>: Hashable  {
     }
     
     static func ==(lhs: SKUnowned<T>, rhs: SKUnowned<T>) -> Bool {
-        return lhs == rhs
+        return lhs.value == rhs.value
     }
     
     unowned var value: T
