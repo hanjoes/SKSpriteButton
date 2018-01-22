@@ -39,8 +39,16 @@ class SKSpriteButtonGroupSpec: QuickSpec {
                 expect(group.buttons.count) == 1
                 expect(group.buttons.contains(button2)).to(beTrue())
             }
+            
+            it("is noop when removing button not added") {
+                let button1 = SKSpriteButton()
+                let button2 = SKSpriteButton()
+                group.add(button: button1)
+                group.remove(button: button2)
+                
+                expect(group.buttons.count) == 1
+            }
         }
-        
     }
 }
 

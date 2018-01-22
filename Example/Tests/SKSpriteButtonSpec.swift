@@ -63,7 +63,7 @@ class SKSpriteButtonTestConfiguration: QuickConfiguration {
     }
 }
 
-// MARK: - SKSpriteButton Spec
+// MARK: - SKSpriteButtonSpec
 
 class SKSpriteButtonSpec: QuickSpec {
     
