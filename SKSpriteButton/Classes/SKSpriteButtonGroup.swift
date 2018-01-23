@@ -27,6 +27,8 @@ public class SKSpriteButtonGroup {
         return storedButtons.map { $0.value }
     }
     
+    private var storedButtons = Set<SKUnowned<SKSpriteButton>>()
+    
     /// Adds an `SKSpriteButton` to a group.
     ///
     /// - Parameter button: the `SKSpriteButton` to be added.
@@ -41,6 +43,4 @@ public class SKSpriteButtonGroup {
     public func remove(button: SKSpriteButton) {
         storedButtons.remove(SKUnowned(value: button))
     }
-    
-    private var storedButtons = Set<SKUnowned<SKSpriteButton>>()
 }

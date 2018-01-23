@@ -81,7 +81,6 @@ public class SKSpriteButton: SKSpriteNode {
             } else {
                 showNormalAppearance()
             }
-            
         }
     }
     
@@ -101,14 +100,14 @@ public class SKSpriteButton: SKSpriteNode {
     // Maintain a copy of the new normal texture so that it can be restored
     override public var texture: SKTexture? {
         didSet {
-            storedNormalTexture = texture
+            originalTexture = texture
         }
     }
     
     // Maintain a copy of the new normal color so that it can be restored
     override public var color: UIColor {
         didSet {
-            storedNormalColor = color
+            originalColor = color
         }
     }
     
@@ -118,8 +117,8 @@ public class SKSpriteButton: SKSpriteNode {
         didSet {
             isUserInteractionEnabled = !disabled
             // more than one texture is associated with node so keep of copy of the normal texture
-            if storedNormalTexture == nil {
-                storedNormalTexture = texture
+            if originalTexture == nil {
+                originalTexture = texture
             }
         }
     }
@@ -129,8 +128,8 @@ public class SKSpriteButton: SKSpriteNode {
         didSet {
             isUserInteractionEnabled = !disabled
             // more than one color is associated with node so keep of copy of the normal color
-            if storedNormalColor == nil {
-                storedNormalColor = color
+            if originalColor == nil {
+                originalColor = color
             }
         }
     }
@@ -140,8 +139,8 @@ public class SKSpriteButton: SKSpriteNode {
     public var disabledTexture: SKTexture? {
         didSet {
             isUserInteractionEnabled = !disabled
-            if storedNormalTexture == nil {
-                storedNormalTexture = texture
+            if originalTexture == nil {
+                originalTexture = texture
             }
             if disabled {
                 showDisabledTexture()
@@ -153,8 +152,8 @@ public class SKSpriteButton: SKSpriteNode {
     public var disabledColor: UIColor? {
         didSet {
             isUserInteractionEnabled = !disabled
-            if storedNormalColor == nil {
-                storedNormalColor = color
+            if originalColor == nil {
+                originalColor = color
             }
             if disabled {
                 showDisabledColor()
@@ -162,9 +161,9 @@ public class SKSpriteButton: SKSpriteNode {
         }
     }
     
-    internal var storedNormalColor: UIColor?
+    internal var originalColor: UIColor?
     
-    internal var storedNormalTexture: SKTexture?
+    internal var originalTexture: SKTexture?
     
     internal var touchesBeganHandlers = [EventHandler]()
     
@@ -324,13 +323,13 @@ private extension SKSpriteButton {
     }
     
     func showNormalColor() {
-        if let storedNormalColor = storedNormalColor {
+        if let storedNormalColor = originalColor {
             super.color = storedNormalColor
         }
     }
     
     func showNormalTexture() {
-        if let storedNormalTexture = storedNormalTexture {
+        if let storedNormalTexture = originalTexture {
             super.texture = storedNormalTexture
         }
     }
