@@ -10,8 +10,8 @@ import SpriteKit
 /// behavior!
 ///
 /// - note: all `write` interaction with the object will
-/// set `isUserInteractionEnabled` to `true` so no need
-/// to explicitly set the variable.
+/// set `isUserInteractionEnabled` to according `disabled`
+/// property.
 ///
 /// User should expect similar ergonomics when using `UIButton`.
 public class SKSpriteButton: SKSpriteNode {
@@ -23,6 +23,7 @@ public class SKSpriteButton: SKSpriteNode {
     public enum Status {
         case normal
         case tapped
+        case disabled
     }
     
     /// __Readonly__ button status represented by `SKSpriteButton.Status`.
