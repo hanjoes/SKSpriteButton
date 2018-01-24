@@ -72,16 +72,12 @@ public class SKSpriteButton: SKSpriteNode {
         }
     }
     
-    /// Used to prevent touch recognition
-    /// Will show the disabled texture and disabled color
-    public var disabled: Bool = false {
-        didSet {
-            isUserInteractionEnabled = !disabled
-            if disabled {
-                showDisabledAppearance()
-            } else {
-                showNormalAppearance()
-            }
+    /// Read-only property for checking whether the button is in `disabled`
+    /// status.
+    public var disabled: Bool {
+        switch status {
+        case .disabled: return true
+        default: return false
         }
     }
     
@@ -98,29 +94,11 @@ public class SKSpriteButton: SKSpriteNode {
     /// `add*` methods.
     public typealias EventHandler = (Set<UITouch>, UIEvent?) -> Void
     
-    // Maintain a copy of the new normal texture so that it can be restored
-    override public var texture: SKTexture? {
-        didSet {
-            originalTexture = texture
-        }
-    }
-    
-    // Maintain a copy of the new normal color so that it can be restored
-    override public var color: UIColor {
-        didSet {
-            originalColor = color
-        }
-    }
-    
     /// Set this variable if you want to display a
     /// different texture when the button is tapped.
     public var tappedTexture: SKTexture? {
         didSet {
             isUserInteractionEnabled = !disabled
-            // more than one texture is associated with node so keep of copy of the normal texture
-            if originalTexture == nil {
-                originalTexture = texture
-            }
         }
     }
     
@@ -128,10 +106,6 @@ public class SKSpriteButton: SKSpriteNode {
     public var tappedColor: UIColor? {
         didSet {
             isUserInteractionEnabled = !disabled
-            // more than one color is associated with node so keep of copy of the normal color
-            if originalColor == nil {
-                originalColor = color
-            }
         }
     }
     
@@ -140,12 +114,6 @@ public class SKSpriteButton: SKSpriteNode {
     public var disabledTexture: SKTexture? {
         didSet {
             isUserInteractionEnabled = !disabled
-            if originalTexture == nil {
-                originalTexture = texture
-            }
-            if disabled {
-                showDisabledTexture()
-            }
         }
     }
     
@@ -153,12 +121,6 @@ public class SKSpriteButton: SKSpriteNode {
     public var disabledColor: UIColor? {
         didSet {
             isUserInteractionEnabled = !disabled
-            if originalColor == nil {
-                originalColor = color
-            }
-            if disabled {
-                showDisabledColor()
-            }
         }
     }
     
@@ -230,6 +192,24 @@ public class SKSpriteButton: SKSpriteNode {
     public func addTouchesMovedHandler(handler: @escaping EventHandler) {
         isUserInteractionEnabled = true
         touchesMovedHandlers.append(handler)
+    }
+    
+    /// Disables the button. Calling this method will disable user interactions.
+    /// Also, calling this method will refresh the appearance. So in case user sets
+    /// disabled texture later than calling this method, you need to call this
+    /// method again to show the disabled texture.
+    public func disable() {
+        status = .disabled
+        isUserInteractionEnabled = false
+        showDisabledAppearance()
+    }
+    
+    /// Disables the receiver. Calling this method will enable user interactions.
+    /// Also, calling this method will display the normal appearance.
+    public func enable() {
+        status = .normal
+        isUserInteractionEnabled = true
+        showNormalAppearance()
     }
 }
 
@@ -325,42 +305,45 @@ private extension SKSpriteButton {
     
     func showNormalColor() {
         if let storedNormalColor = originalColor {
-            super.color = storedNormalColor
+            color = storedNormalColor
         }
     }
     
     func showNormalTexture() {
         if let storedNormalTexture = originalTexture {
-            super.texture = storedNormalTexture
+            texture = storedNormalTexture
         }
     }
     
     func showDisabledColor() {
         if let disabledColor = disabledColor {
-            super.color = disabledColor
+            originalColor = color
+            color = disabledColor
         }
     }
     
     func showDisabledTexture() {
         guard let _ = texture else { return }
-        
+
         if let disabledTexture = disabledTexture {
-            super.texture = disabledTexture
+            originalTexture = texture
+            texture = disabledTexture
         }
     }
     
     func showTappedColor() {
         if let tappedColor = tappedColor {
-            super.color = tappedColor
+            originalColor = color
+            color = tappedColor
         }
     }
     
     func showTappedTexture() {
-        // doesn't make sense to show tapped texture if it doesn't have texture initially
         guard let _ = texture else { return }
         
         if let tappedTexture = tappedTexture {
-            super.texture = tappedTexture
+            originalTexture = texture
+            texture = tappedTexture
         }
     }
     
