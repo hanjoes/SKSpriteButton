@@ -231,7 +231,63 @@ extension SKSpriteButton {
     public override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         touchesMoved(touches, event)
     }
+}
+
+extension SKSpriteButton {
     
+    /// Override the texture property to only affect the __normal__
+    /// appearance. Setting the texture directly won't change the
+    /// button's apperance if it's in `tapped` or `disabled` status
+    /// but instead it will store the new texture as the original
+    /// texture which will be displayed once the button goes back
+    /// to the `normal` status.
+    public override var texture: SKTexture? {
+        willSet {
+            switch status {
+            case .disabled, .tapped:
+                originalTexture = newValue
+            case .normal:
+                break
+            }
+        }
+        didSet {
+            switch status {
+            case .disabled:
+                showDisabledAppearance()
+            case .tapped:
+                showTappedAppearance()
+            case .normal:
+                break
+            }
+        }
+    }
+    
+    /// Override the color property to only affect the __normal__
+    /// appearance. Setting the color directly won't change the
+    /// button's apperance if it's in `tapped` or `disabled` status
+    /// but instead it will store the new color as the original
+    /// color which will be displayed once the button goes back
+    /// to the `normal` status.
+    public override var color: SKColor {
+        willSet {
+            switch status {
+            case .disabled, .tapped:
+                originalColor = newValue
+            case .normal:
+                break
+            }
+        }
+        didSet {
+            switch status {
+            case .disabled:
+                showDisabledAppearance()
+            case .tapped:
+                showTappedAppearance()
+            case .normal:
+                break
+            }
+        }
+    }
 }
 
 // MARK: - Custom Event Layer
@@ -261,7 +317,6 @@ private extension SKSpriteButton {
             else if status == .normal && !areOutsideOfButtonFrame(touches) {
                 touchesDown(touches, event)
             }
-            
         }
     }
     
@@ -326,7 +381,9 @@ private extension SKSpriteButton {
         guard let _ = texture else { return }
 
         if let disabledTexture = disabledTexture {
-            originalTexture = texture
+            if case .normal = status  {
+                originalTexture = texture
+            }
             texture = disabledTexture
         }
     }
