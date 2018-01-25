@@ -360,20 +360,20 @@ private extension SKSpriteButton {
     
     func showNormalColor() {
         if let storedNormalColor = originalColor {
-            color = storedNormalColor
+            super.color = storedNormalColor
         }
     }
     
     func showNormalTexture() {
         if let storedNormalTexture = originalTexture {
-            texture = storedNormalTexture
+            super.texture = storedNormalTexture
         }
     }
     
     func showDisabledColor() {
         if let disabledColor = disabledColor {
             originalColor = color
-            color = disabledColor
+            super.color = disabledColor
         }
     }
     
@@ -384,14 +384,14 @@ private extension SKSpriteButton {
             if case .normal = status  {
                 originalTexture = texture
             }
-            texture = disabledTexture
+            super.texture = disabledTexture
         }
     }
     
     func showTappedColor() {
         if let tappedColor = tappedColor {
             originalColor = color
-            color = tappedColor
+            super.color = tappedColor
         }
     }
     
@@ -400,7 +400,7 @@ private extension SKSpriteButton {
         
         if let tappedTexture = tappedTexture {
             originalTexture = texture
-            texture = tappedTexture
+            super.texture = tappedTexture
         }
     }
     
