@@ -10,11 +10,16 @@ struct Something {
     static let CanSetMoveType = "can set moveType"
     static let CanSetTappedColor = "can set tapped color"
     static let CanSetTappedTexture = "can set tapped texture"
+    static let CanSetDisabledColor = "can set disabled color"
+    static let CanSetDisabledTexture = "can set disabled texture"
 }
 
 let MoveType = "moveType"
 let TappedColor = "tappedColor"
 let TappedTexture = "tappedTexture"
+let DisabledColor = "disabledTexture"
+let DisabledTexture = "disabledTexture"
+
 
 // MARK: - Shared Examples
 
@@ -59,7 +64,36 @@ class SKSpriteButtonTestConfiguration: QuickConfiguration {
                 }
             }
         }
+        
+        sharedExamples(Something.CanSetDisabledColor) {
+            (sharedExampleContext: @escaping SharedExampleContext) in
+            let disabledColor = sharedExampleContext()[DisabledColor] as? UIColor
+            it("to \(String(describing: disabledColor))") {
+                let button = SKSpriteButton()
+                if let disabledColor = disabledColor {
+                    button.disabledColor = disabledColor
+                    expect(button.disabledColor) == disabledColor
+                }
+                else {
+                    expect(button.disabledColor).to(beNil())
+                }
+            }
+        }
 
+        sharedExamples(Something.CanSetDisabledTexture) {
+            (sharedExampleContext: @escaping SharedExampleContext) in
+            let disabledTexture = sharedExampleContext()[DisabledTexture] as? SKTexture
+            it("to \(String(describing: disabledTexture))") {
+                let button = SKSpriteButton()
+                if let disabledTexture = disabledTexture {
+                    button.disabledTexture = disabledTexture
+                    expect(button.disabledTexture) == disabledTexture
+                }
+                else {
+                    expect(button.disabledTexture).to(beNil())
+                }
+            }
+        }
     }
 }
 
@@ -183,6 +217,11 @@ class SKSpriteButtonSpec: QuickSpec {
             itBehavesLike(Something.CanSetTappedColor) { [TappedColor: Optional<UIColor>.none as Any] }
             itBehavesLike(Something.CanSetTappedTexture) { [TappedTexture: SKTexture()] }
             itBehavesLike(Something.CanSetTappedTexture) { [TappedTexture: Optional<SKTexture>.none as Any] }
+            
+            itBehavesLike(Something.CanSetDisabledColor) { [DisabledColor: UIColor.black] }
+            itBehavesLike(Something.CanSetDisabledColor) { [DisabledColor: Optional<UIColor>.none as Any] }
+            itBehavesLike(Something.CanSetDisabledTexture) { [DisabledTexture: SKTexture()] }
+            itBehavesLike(Something.CanSetDisabledTexture) { [DisabledTexture: Optional<SKTexture>.none as Any] }
             
             context("when it has initial texture") {
                 let initialTexture = SKTexture()
