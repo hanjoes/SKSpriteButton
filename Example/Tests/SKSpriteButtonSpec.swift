@@ -303,6 +303,22 @@ class SKSpriteButtonSpec: QuickSpec {
                 }
             }
             
+            context("when disabled") {
+                
+                beforeEach {
+                    button.disable()
+                }
+                
+                it("is disabled") {
+                    expect(button.disabled).to(beTrue())
+                }
+                
+                it("can be reenabled") {
+                    button.enable()
+                    expect(button.disabled).to(beFalse())
+                }
+            }
+            
             
             // MARK: - Different MoveTypes
             describe("handles events") {
