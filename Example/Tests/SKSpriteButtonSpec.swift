@@ -352,6 +352,64 @@ class SKSpriteButtonSpec: QuickSpec {
                         expect(button.originalColor!.isEquivalent(to: newNormalColor)).to(beTrue())
                         expect(button.color.isEquivalent(to: newNormalColor)).to(beTrue())
                     }
+                    
+                }
+                
+                context("when it has disabled texture") {
+                    let disabledTexture = SKTexture()
+                    beforeEach {
+                        button.disabledTexture = disabledTexture
+                    }
+                    
+                    it("does not show disabled texture if disable is called") {
+                        button.disable()
+                        expect(button.texture).to(beNil())
+                    }
+                    
+                    context("when it has normal texture") {
+                        let normalTexture = SKTexture()
+                        beforeEach {
+                            button.texture = normalTexture
+                        }
+                        
+                        it("shows disabled texture even if disabled is not called") {
+                            expect(button.texture) == disabledTexture
+                        }
+                        
+                        it("shows disabled texture if disable is called") {
+                            button.disable()
+                            expect(button.texture) == disabledTexture
+                        }
+                        
+                        it("shows normal texture if enable is called") {
+                            button.enable()
+                            expect(button.texture) == normalTexture
+                        }
+                    }
+                    
+                    
+//                    it("shows disabled color when disabled explicitly") {
+//                        button.disable()
+//                        expect(button.color.isEquivalent(to: disabledColor)).to(beTrue())
+//                    }
+//
+//                    it("does not reflect change to color property immediately when disabled") {
+//                        button.disable()
+//                        let newNormalColor = UIColor.green
+//                        button.color = newNormalColor
+//                        expect(button.originalColor!.isEquivalent(to: newNormalColor)).to(beTrue())
+//                        expect(button.color.isEquivalent(to: disabledColor)).to(beTrue())
+//                    }
+//
+//                    it("reflect change to color property when enabled again") {
+//                        button.disable()
+//                        let newNormalColor = UIColor.green
+//                        button.color = newNormalColor
+//                        button.enable()
+//                        expect(button.originalColor!.isEquivalent(to: newNormalColor)).to(beTrue())
+//                        expect(button.color.isEquivalent(to: newNormalColor)).to(beTrue())
+//                    }
+                    
                 }
             }
             
