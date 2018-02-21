@@ -344,7 +344,7 @@ class SKSpriteButtonSpec: QuickSpec {
                         expect(button.color.isEquivalent(to: disabledColor)).to(beTrue())
                     }
                     
-                    it("reflect change to color property when enabled again") {
+                    it("reflects change to color property when enabled again") {
                         button.disable()
                         let newNormalColor = UIColor.green
                         button.color = newNormalColor
@@ -372,6 +372,7 @@ class SKSpriteButtonSpec: QuickSpec {
                             button.texture = normalTexture
                         }
                         
+                        
                         it("shows disabled texture even if disabled is not called") {
                             expect(button.texture) == disabledTexture
                         }
@@ -386,30 +387,6 @@ class SKSpriteButtonSpec: QuickSpec {
                             expect(button.texture) == normalTexture
                         }
                     }
-                    
-                    
-//                    it("shows disabled color when disabled explicitly") {
-//                        button.disable()
-//                        expect(button.color.isEquivalent(to: disabledColor)).to(beTrue())
-//                    }
-//
-//                    it("does not reflect change to color property immediately when disabled") {
-//                        button.disable()
-//                        let newNormalColor = UIColor.green
-//                        button.color = newNormalColor
-//                        expect(button.originalColor!.isEquivalent(to: newNormalColor)).to(beTrue())
-//                        expect(button.color.isEquivalent(to: disabledColor)).to(beTrue())
-//                    }
-//
-//                    it("reflect change to color property when enabled again") {
-//                        button.disable()
-//                        let newNormalColor = UIColor.green
-//                        button.color = newNormalColor
-//                        button.enable()
-//                        expect(button.originalColor!.isEquivalent(to: newNormalColor)).to(beTrue())
-//                        expect(button.color.isEquivalent(to: newNormalColor)).to(beTrue())
-//                    }
-                    
                 }
             }
             
