@@ -17,7 +17,6 @@
 		607FACEC1AFB9204008FA782 /* SKSpriteButtonSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* SKSpriteButtonSpec.swift */; };
 		DB6D329E1F81F4C100DA828C /* SKSpriteButtonDemoScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DB6D329D1F81F4C100DA828C /* SKSpriteButtonDemoScene.sks */; };
 		DB6D32A21F81F82400DA828C /* SKSpriteButtonDemoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6D32A11F81F82400DA828C /* SKSpriteButtonDemoScene.swift */; };
-		DB95B1602010882100827AFC /* SKSpriteButtonGroupSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB95B15F2010882100827AFC /* SKSpriteButtonGroupSpec.swift */; };
 		DBB54A1E1F8B328A007BD711 /* SKSpriteButtonTouch.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB54A1D1F8B328A007BD711 /* SKSpriteButtonTouch.swift */; };
 		DBB54A221F8B4805007BD711 /* SKSpriteButtonTestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB54A211F8B4805007BD711 /* SKSpriteButtonTestUtils.swift */; };
 /* End PBXBuildFile section */
@@ -55,7 +54,6 @@
 		DB6D329D1F81F4C100DA828C /* SKSpriteButtonDemoScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SKSpriteButtonDemoScene.sks; sourceTree = "<group>"; };
 		DB6D32A01F81F52500DA828C /* SKSpriteButton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SKSpriteButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB6D32A11F81F82400DA828C /* SKSpriteButtonDemoScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKSpriteButtonDemoScene.swift; sourceTree = "<group>"; };
-		DB95B15F2010882100827AFC /* SKSpriteButtonGroupSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKSpriteButtonGroupSpec.swift; sourceTree = "<group>"; };
 		DBB54A1D1F8B328A007BD711 /* SKSpriteButtonTouch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKSpriteButtonTouch.swift; sourceTree = "<group>"; };
 		DBB54A211F8B4805007BD711 /* SKSpriteButtonTestUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKSpriteButtonTestUtils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -150,7 +148,6 @@
 			isa = PBXGroup;
 			children = (
 				607FACEB1AFB9204008FA782 /* SKSpriteButtonSpec.swift */,
-				DB95B15F2010882100827AFC /* SKSpriteButtonGroupSpec.swift */,
 				DBB54A1D1F8B328A007BD711 /* SKSpriteButtonTouch.swift */,
 				DBB54A211F8B4805007BD711 /* SKSpriteButtonTestUtils.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
@@ -404,7 +401,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBB54A1E1F8B328A007BD711 /* SKSpriteButtonTouch.swift in Sources */,
-				DB95B1602010882100827AFC /* SKSpriteButtonGroupSpec.swift in Sources */,
 				DBB54A221F8B4805007BD711 /* SKSpriteButtonTestUtils.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* SKSpriteButtonSpec.swift in Sources */,
 			);

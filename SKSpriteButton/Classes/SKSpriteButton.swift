@@ -48,30 +48,6 @@ public class SKSpriteButton: SKSpriteNode {
         case reentry
     }
     
-    // Button becomes a toggle switch that switches between normal and tapped
-    public var isToggleMode: Bool = false {
-        didSet {
-            // Run again in case isToggleOn set first
-            if isToggledOn {
-                showTappedAppearance()
-            } else {
-                showNormalAppearance()
-            }
-        }
-    }
-    
-    public var isToggledOn: Bool = false {
-        didSet {
-            // Don't call handlers as this is not an action when set manually
-            // this is necessary when having a group of buttons to toggle each other
-            if isToggledOn {
-                showTappedAppearance()
-            } else {
-                showNormalAppearance()
-            }
-        }
-    }
-    
     /// Read-only property for checking whether the button is in `disabled`
     /// status.
     public var disabled: Bool {
@@ -135,32 +111,6 @@ public class SKSpriteButton: SKSpriteNode {
     internal var touchesCancelledHandlers = [EventHandler]()
     
     internal var touchesMovedHandlers = [EventHandler]()
-    
-    internal var toggleOnHandlers = [EventHandler]()
-    
-    internal var toggleOffHandlers = [EventHandler]()
-    
-    internal var buttonGroup: SKSpriteButtonGroup?
-    
-    /// This is tightly controlled as it's not intended for any other purpose than
-    /// to toggle the associated buttons in the opposite direction to this button.
-    internal var toggleGroup = Set<SKSpriteButton>()
-    
-    /// Add a method handler for `toggleOn` event.
-    ///
-    /// - Parameter handler: a closure conforms to `SKSpriteButton.EventHandler`.
-    public func addToggleOnHandler(handler: @escaping EventHandler) {
-        toggleOnHandlers.append(handler)
-    }
-    
-    /// Add a method handler for `toggleOn` event.
-    /// If this will not get called when a toggle group is added, you will have to
-    /// manage the off action of this button with the on actions of the group buttons
-    ///
-    /// - Parameter handler: a closure conforms to `SKSpriteButton.EventHandler`.
-    public func addToggleOffHandler(handler: @escaping EventHandler) {
-        toggleOffHandlers.append(handler)
-    }
     
     /// Add a method handler for `touchesBegan` event.
     ///
@@ -325,11 +275,7 @@ private extension SKSpriteButton {
             return
         }
         
-        if isToggleMode {
-            invokeToggleBehavior(touches, event)
-        } else {
-            invokeTouchesUpBehavior(touches, event)
-        }
+        invokeTouchesUpBehavior(touches, event)
     }
     
     func touchesCancelled(_ touches: Set<UITouch>, _ event: UIEvent?) {
@@ -435,39 +381,6 @@ private extension SKSpriteButton {
         }
     }
     
-    func invokeToggleBehavior(_ touches: Set<UITouch>, _ event: UIEvent?) {
-        if isToggledOn {
-            if let buttonGroup = buttonGroup, !buttonGroup.buttons.isEmpty {
-                return
-            }
-            
-            triggerToggledOff()
-            
-            toggleOffHandlers.forEach {
-                handler in
-                handler(touches, event)
-            }
-            
-        } else {
-            triggerToggledOn()
-            
-            for button in toggleGroup {
-                button.isToggledOn = false
-            }
-            
-            toggleOnHandlers.forEach {
-                handler in
-                handler(touches, event)
-            }
-        }
-        
-        touchesUpHandlers.forEach {
-            handler in
-            handler(touches, event)
-        }
-        
-    }
-    
     func triggerNormal() {
         status = .normal
         showNormalAppearance()
@@ -476,19 +389,6 @@ private extension SKSpriteButton {
     func triggerTapped() {
         status = .tapped
         showTappedAppearance()
-    }
-    
-    func triggerToggledOff() {
-        status = .normal
-        showNormalAppearance()
-        isToggledOn = false
-    }
-    
-    func triggerToggledOn() {
-        status = .normal
-        showTappedAppearance()
-        isToggledOn = true
-        
     }
     
     func areOutsideOfButtonFrame(_ touches: Set<UITouch>) -> Bool {
