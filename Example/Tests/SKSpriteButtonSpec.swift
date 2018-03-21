@@ -303,6 +303,22 @@ class SKSpriteButtonSpec: QuickSpec {
                 }
             }
             
+            // MARK: Tapped Status
+            context("when tapped") {
+                beforeEach {
+                    button.touchesBegan(Set<UITouch>(), with: nil)
+                }
+                
+                it("is in tapped status") {
+                    expect(button.status) == SKSpriteButton.Status.tapped
+                }
+                
+                it("stays in the original color") {
+                    expect(button.color.isEquivalent(to: UIColor.black)).to(beTrue())
+                }
+            }
+            
+            // MARK: Disabled Status
             context("when disabled") {
                 beforeEach {
                     button.disable()
@@ -371,7 +387,6 @@ class SKSpriteButtonSpec: QuickSpec {
                         beforeEach {
                             button.texture = normalTexture
                         }
-                        
                         
                         it("shows disabled texture even if disabled is not called") {
                             expect(button.texture) == disabledTexture
