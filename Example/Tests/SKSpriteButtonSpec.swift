@@ -10,11 +10,16 @@ struct Something {
     static let CanSetMoveType = "can set moveType"
     static let CanSetTappedColor = "can set tapped color"
     static let CanSetTappedTexture = "can set tapped texture"
+    static let CanSetDisabledColor = "can set disabled color"
+    static let CanSetDisabledTexture = "can set disabled texture"
 }
 
 let MoveType = "moveType"
 let TappedColor = "tappedColor"
 let TappedTexture = "tappedTexture"
+let DisabledColor = "disabledTexture"
+let DisabledTexture = "disabledTexture"
+
 
 // MARK: - Shared Examples
 
@@ -59,11 +64,40 @@ class SKSpriteButtonTestConfiguration: QuickConfiguration {
                 }
             }
         }
+        
+        sharedExamples(Something.CanSetDisabledColor) {
+            (sharedExampleContext: @escaping SharedExampleContext) in
+            let disabledColor = sharedExampleContext()[DisabledColor] as? UIColor
+            it("to \(String(describing: disabledColor))") {
+                let button = SKSpriteButton()
+                if let disabledColor = disabledColor {
+                    button.disabledColor = disabledColor
+                    expect(button.disabledColor) == disabledColor
+                }
+                else {
+                    expect(button.disabledColor).to(beNil())
+                }
+            }
+        }
 
+        sharedExamples(Something.CanSetDisabledTexture) {
+            (sharedExampleContext: @escaping SharedExampleContext) in
+            let disabledTexture = sharedExampleContext()[DisabledTexture] as? SKTexture
+            it("to \(String(describing: disabledTexture))") {
+                let button = SKSpriteButton()
+                if let disabledTexture = disabledTexture {
+                    button.disabledTexture = disabledTexture
+                    expect(button.disabledTexture) == disabledTexture
+                }
+                else {
+                    expect(button.disabledTexture).to(beNil())
+                }
+            }
+        }
     }
 }
 
-// MARK: - SKSpriteButton Spec
+// MARK: - SKSpriteButtonSpec
 
 class SKSpriteButtonSpec: QuickSpec {
     
@@ -184,9 +218,13 @@ class SKSpriteButtonSpec: QuickSpec {
             itBehavesLike(Something.CanSetTappedTexture) { [TappedTexture: SKTexture()] }
             itBehavesLike(Something.CanSetTappedTexture) { [TappedTexture: Optional<SKTexture>.none as Any] }
             
+            itBehavesLike(Something.CanSetDisabledColor) { [DisabledColor: UIColor.black] }
+            itBehavesLike(Something.CanSetDisabledColor) { [DisabledColor: Optional<UIColor>.none as Any] }
+            itBehavesLike(Something.CanSetDisabledTexture) { [DisabledTexture: SKTexture()] }
+            itBehavesLike(Something.CanSetDisabledTexture) { [DisabledTexture: Optional<SKTexture>.none as Any] }
+            
             context("when it has initial texture") {
                 let initialTexture = SKTexture()
-                let tappedTexture = SKTexture()
                 beforeEach { button.texture = initialTexture }
                 
                 context("when it does not have tapped texture") {
@@ -201,7 +239,8 @@ class SKSpriteButtonSpec: QuickSpec {
                     }
                 }
                 
-                context("when has tapped texture") {
+                context("when it has tapped texture") {
+                    let tappedTexture = SKTexture()
                     beforeEach { button.tappedTexture = tappedTexture }
                     
                     it("it changes texture if tapped") {
@@ -261,6 +300,108 @@ class SKSpriteButtonSpec: QuickSpec {
                     button.touchesBegan(Set<UITouch>(), with: nil)
                     button.touchesEnded(Set<UITouch>(), with: nil)
                     expect(button.color.isEquivalent(to: UIColor.black)).to(beTrue())
+                }
+            }
+            
+            // MARK: Tapped Status
+            context("when tapped") {
+                beforeEach {
+                    button.touchesBegan(Set<UITouch>(), with: nil)
+                }
+                
+                it("is in tapped status") {
+                    expect(button.status) == SKSpriteButton.Status.tapped
+                }
+                
+                it("stays in the original color") {
+                    expect(button.color.isEquivalent(to: UIColor.black)).to(beTrue())
+                }
+            }
+            
+            // MARK: Disabled Status
+            context("when disabled") {
+                beforeEach {
+                    button.disable()
+                }
+                
+                it("is disabled") {
+                    expect(button.disabled).to(beTrue())
+                }
+                
+                it("can be reenabled") {
+                    button.enable()
+                    expect(button.disabled).to(beFalse())
+                }
+                
+                it("cannot be interacted by user") {
+                    expect(button.isUserInteractionEnabled).to(beFalse())
+                }
+                
+                context("when it has disabled color") {
+                    let disabledColor = UIColor.red
+                    beforeEach {
+                        button.disabledColor = disabledColor
+                    }
+                    
+                    it("does not show disabled color if disable is not called") {
+                        expect(button.color.isEquivalent(to: UIColor.black)).to(beTrue())
+                    }
+                    
+                    it("shows disabled color when disabled explicitly") {
+                        button.disable()
+                        expect(button.color.isEquivalent(to: disabledColor)).to(beTrue())
+                    }
+                    
+                    it("does not reflect change to color property immediately when disabled") {
+                        button.disable()
+                        let newNormalColor = UIColor.green
+                        button.color = newNormalColor
+                        expect(button.originalColor!.isEquivalent(to: newNormalColor)).to(beTrue())
+                        expect(button.color.isEquivalent(to: disabledColor)).to(beTrue())
+                    }
+                    
+                    it("reflects change to color property when enabled again") {
+                        button.disable()
+                        let newNormalColor = UIColor.green
+                        button.color = newNormalColor
+                        button.enable()
+                        expect(button.originalColor!.isEquivalent(to: newNormalColor)).to(beTrue())
+                        expect(button.color.isEquivalent(to: newNormalColor)).to(beTrue())
+                    }
+                    
+                }
+                
+                context("when it has disabled texture") {
+                    let disabledTexture = SKTexture()
+                    beforeEach {
+                        button.disabledTexture = disabledTexture
+                    }
+                    
+                    it("does not show disabled texture if disable is called") {
+                        button.disable()
+                        expect(button.texture).to(beNil())
+                    }
+                    
+                    context("when it has normal texture") {
+                        let normalTexture = SKTexture()
+                        beforeEach {
+                            button.texture = normalTexture
+                        }
+                        
+                        it("shows disabled texture even if disabled is not called") {
+                            expect(button.texture) == disabledTexture
+                        }
+                        
+                        it("shows disabled texture if disable is called") {
+                            button.disable()
+                            expect(button.texture) == disabledTexture
+                        }
+                        
+                        it("shows normal texture if enable is called") {
+                            button.enable()
+                            expect(button.texture) == normalTexture
+                        }
+                    }
                 }
             }
             

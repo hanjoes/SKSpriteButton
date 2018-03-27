@@ -10,8 +10,8 @@ import SpriteKit
 /// behavior!
 ///
 /// - note: all `write` interaction with the object will
-/// set `isUserInteractionEnabled` to `true` so no need
-/// to explicitly set the variable.
+/// set `isUserInteractionEnabled` to according `disabled`
+/// property.
 ///
 /// User should expect similar ergonomics when using `UIButton`.
 public class SKSpriteButton: SKSpriteNode {
@@ -23,6 +23,7 @@ public class SKSpriteButton: SKSpriteNode {
     public enum Status {
         case normal
         case tapped
+        case disabled
     }
     
     /// __Readonly__ button status represented by `SKSpriteButton.Status`.
@@ -47,41 +48,12 @@ public class SKSpriteButton: SKSpriteNode {
         case reentry
     }
     
-    // Button becomes a toggle switch that switches between normal and tapped
-    public var isToggleMode: Bool = false {
-        didSet {
-            // Run again in case isToggleOn set first
-            if isToggledOn {
-                showTappedAppearance()
-            } else {
-                showNormalAppearance()
-            }
-        }
-    }
-    
-    public var isToggledOn: Bool = false {
-        didSet {
-            // Don't call handlers as this is not an action when set manually
-            // this is necessary when having a group of buttons to toggle each other
-            if isToggledOn {
-                showTappedAppearance()
-            } else {
-                showNormalAppearance()
-            }
-        }
-    }
-    
-    /// Used to prevent touch recognition
-    /// Will show the disabled texture and disabled color
-    public var disabled: Bool = false {
-        didSet {
-            isUserInteractionEnabled = !disabled
-            if disabled {
-                showDisabledAppearance()
-            } else {
-                showNormalAppearance()
-            }
-            
+    /// Read-only property for checking whether the button is in `disabled`
+    /// status.
+    public var disabled: Bool {
+        switch status {
+        case .disabled: return true
+        default: return false
         }
     }
     
@@ -98,29 +70,11 @@ public class SKSpriteButton: SKSpriteNode {
     /// `add*` methods.
     public typealias EventHandler = (Set<UITouch>, UIEvent?) -> Void
     
-    // Maintain a copy of the new normal texture so that it can be restored
-    override public var texture: SKTexture? {
-        didSet {
-            storedNormalTexture = texture
-        }
-    }
-    
-    // Maintain a copy of the new normal color so that it can be restored
-    override public var color: UIColor {
-        didSet {
-            storedNormalColor = color
-        }
-    }
-    
     /// Set this variable if you want to display a
     /// different texture when the button is tapped.
     public var tappedTexture: SKTexture? {
         didSet {
             isUserInteractionEnabled = !disabled
-            // more than one texture is associated with node so keep of copy of the normal texture
-            if storedNormalTexture == nil {
-                storedNormalTexture = texture
-            }
         }
     }
     
@@ -128,10 +82,6 @@ public class SKSpriteButton: SKSpriteNode {
     public var tappedColor: UIColor? {
         didSet {
             isUserInteractionEnabled = !disabled
-            // more than one color is associated with node so keep of copy of the normal color
-            if storedNormalColor == nil {
-                storedNormalColor = color
-            }
         }
     }
     
@@ -140,12 +90,6 @@ public class SKSpriteButton: SKSpriteNode {
     public var disabledTexture: SKTexture? {
         didSet {
             isUserInteractionEnabled = !disabled
-            if storedNormalTexture == nil {
-                storedNormalTexture = texture
-            }
-            if disabled {
-                showDisabledTexture()
-            }
         }
     }
     
@@ -153,18 +97,12 @@ public class SKSpriteButton: SKSpriteNode {
     public var disabledColor: UIColor? {
         didSet {
             isUserInteractionEnabled = !disabled
-            if storedNormalColor == nil {
-                storedNormalColor = color
-            }
-            if disabled {
-                showDisabledColor()
-            }
         }
     }
     
-    internal var storedNormalColor: UIColor?
+    internal var originalColor: UIColor?
     
-    internal var storedNormalTexture: SKTexture?
+    internal var originalTexture: SKTexture?
     
     internal var touchesBeganHandlers = [EventHandler]()
     
@@ -173,30 +111,6 @@ public class SKSpriteButton: SKSpriteNode {
     internal var touchesCancelledHandlers = [EventHandler]()
     
     internal var touchesMovedHandlers = [EventHandler]()
-    
-    internal var toggleOnHandlers = [EventHandler]()
-    
-    internal var toggleOffHandlers = [EventHandler]()
-    
-    // This is tightly controlled as it's not intended for anyother purpose than
-    // to toogle the associated buttons in the opposite direction to this button
-    internal var toggleGroup = Set<SKSpriteButton>()
-    
-    /// Add a method handler for `toggleOn` event.
-    ///
-    /// - Parameter handler: a closure conforms to `SKSpriteButton.EventHandler`.
-    public func addToggleOnHandler(handler: @escaping EventHandler) {
-        toggleOnHandlers.append(handler)
-    }
-    
-    /// Add a method handler for `toggleOn` event.
-    /// If this will not get called when a toggle group is added, you will have to
-    /// manage the off action of this button with the on actions of the group buttons
-    ///
-    /// - Parameter handler: a closure conforms to `SKSpriteButton.EventHandler`.
-    public func addToggleOffHandler(handler: @escaping EventHandler) {
-        toggleOffHandlers.append(handler)
-    }
     
     /// Add a method handler for `touchesBegan` event.
     ///
@@ -229,6 +143,24 @@ public class SKSpriteButton: SKSpriteNode {
         isUserInteractionEnabled = true
         touchesMovedHandlers.append(handler)
     }
+    
+    /// Disables the button. Calling this method will disable user interactions.
+    /// Also, calling this method will refresh the appearance. So in case user sets
+    /// disabled texture later than calling this method, you need to call this
+    /// method again to show the disabled texture.
+    public func disable() {
+        status = .disabled
+        isUserInteractionEnabled = false
+        showDisabledAppearance()
+    }
+    
+    /// Disables the receiver. Calling this method will enable user interactions.
+    /// Also, calling this method will display the normal appearance.
+    public func enable() {
+        status = .normal
+        isUserInteractionEnabled = true
+        showNormalAppearance()
+    }
 }
 
 
@@ -249,17 +181,62 @@ extension SKSpriteButton {
     public override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         touchesMoved(touches, event)
     }
-    
 }
 
-// MARK: - Group buttons together when toggling
 extension SKSpriteButton {
-    public func addToggleGroup(button:SKSpriteButton) {
-        toggleGroup.insert(button)
+    
+    /// Override the texture property to only affect the __normal__
+    /// appearance. Setting the texture directly won't change the
+    /// button's apperance if it's in `tapped` or `disabled` status
+    /// but instead it will store the new texture as the original
+    /// texture which will be displayed once the button goes back
+    /// to the `normal` status.
+    public override var texture: SKTexture? {
+        willSet {
+            switch status {
+            case .disabled, .tapped:
+                originalTexture = newValue
+            case .normal:
+                break
+            }
+        }
+        didSet {
+            switch status {
+            case .disabled:
+                showDisabledAppearance()
+            case .tapped:
+                showTappedAppearance()
+            case .normal:
+                break
+            }
+        }
     }
     
-    public func removeToggleGroup(button:SKSpriteButton) {
-        toggleGroup.remove(button)
+    /// Override the color property to only affect the __normal__
+    /// appearance. Setting the color directly won't change the
+    /// button's apperance if it's in `tapped` or `disabled` status
+    /// but instead it will store the new color as the original
+    /// color which will be displayed once the button goes back
+    /// to the `normal` status.
+    public override var color: SKColor {
+        willSet {
+            switch status {
+            case .disabled, .tapped:
+                originalColor = newValue
+            case .normal:
+                break
+            }
+        }
+        didSet {
+            switch status {
+            case .disabled:
+                showDisabledAppearance()
+            case .tapped:
+                showTappedAppearance()
+            case .normal:
+                break
+            }
+        }
     }
 }
 
@@ -290,7 +267,6 @@ private extension SKSpriteButton {
             else if status == .normal && !areOutsideOfButtonFrame(touches) {
                 touchesDown(touches, event)
             }
-            
         }
     }
     
@@ -299,11 +275,7 @@ private extension SKSpriteButton {
             return
         }
         
-        if isToggleMode {
-            invokeToggleBehavior(touches, event)
-        } else {
-            invokeTouchesUpBehavior(touches, event)
-        }
+        invokeTouchesUpBehavior(touches, event)
     }
     
     func touchesCancelled(_ touches: Set<UITouch>, _ event: UIEvent?) {
@@ -333,42 +305,47 @@ private extension SKSpriteButton {
     }
     
     func showNormalColor() {
-        if let storedNormalColor = storedNormalColor {
+        if let storedNormalColor = originalColor {
             super.color = storedNormalColor
         }
     }
     
     func showNormalTexture() {
-        if let storedNormalTexture = storedNormalTexture {
+        if let storedNormalTexture = originalTexture {
             super.texture = storedNormalTexture
         }
     }
     
     func showDisabledColor() {
         if let disabledColor = disabledColor {
+            originalColor = color
             super.color = disabledColor
         }
     }
     
     func showDisabledTexture() {
         guard let _ = texture else { return }
-        
+
         if let disabledTexture = disabledTexture {
+            if case .normal = status  {
+                originalTexture = texture
+            }
             super.texture = disabledTexture
         }
     }
     
     func showTappedColor() {
         if let tappedColor = tappedColor {
+            originalColor = color
             super.color = tappedColor
         }
     }
     
     func showTappedTexture() {
-        // doesn't make sense to show tapped texture if it doesn't have texture initially
         guard let _ = texture else { return }
         
         if let tappedTexture = tappedTexture {
+            originalTexture = texture
             super.texture = tappedTexture
         }
     }
@@ -404,40 +381,6 @@ private extension SKSpriteButton {
         }
     }
     
-    func invokeToggleBehavior(_ touches: Set<UITouch>, _ event: UIEvent?) {
-        if isToggledOn {
-            // Group toogle cannot self toggle off
-            if toggleGroup.count > 0 {
-                return
-            }
-            
-            triggerToggledOff()
-            
-            toggleOffHandlers.forEach {
-                handler in
-                handler(touches, event)
-            }
-            
-        } else {
-            triggerToggledOn()
-            
-            for button in toggleGroup {
-                button.isToggledOn = false
-            }
-            
-            toggleOnHandlers.forEach {
-                handler in
-                handler(touches, event)
-            }
-        }
-        
-        touchesUpHandlers.forEach {
-            handler in
-            handler(touches, event)
-        }
-        
-    }
-    
     func triggerNormal() {
         status = .normal
         showNormalAppearance()
@@ -446,19 +389,6 @@ private extension SKSpriteButton {
     func triggerTapped() {
         status = .tapped
         showTappedAppearance()
-    }
-    
-    func triggerToggledOff() {
-        status = .normal
-        showNormalAppearance()
-        isToggledOn = false
-    }
-    
-    func triggerToggledOn() {
-        status = .normal
-        showTappedAppearance()
-        isToggledOn = true
-        
     }
     
     func areOutsideOfButtonFrame(_ touches: Set<UITouch>) -> Bool {
