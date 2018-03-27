@@ -18,7 +18,7 @@ public class SKSpriteButton: SKSpriteNode {
     
     /// Button states indicating the current state of the button. Button can only have one state at a time
     ///
-    /// - __normal__: button is not tapped by user
+    /// - __normal__: button is not tapped by user or toggledOff in toggle mode
     /// - __tapped__: button is held down
     /// - __disabled__: button is disabled and will not respond to user input
     /// - __toggledOn__: button is in the toggled on state, can only enter this state if isToggleMode is true
@@ -107,7 +107,7 @@ public class SKSpriteButton: SKSpriteNode {
     }
     
     /// Set the new color and maintain a copy of it for the current state
-    override public var color: UIColor {
+    override public var color: UIColor? {
         didSet {
             // Cache new state color
             stateColors[state] = color
