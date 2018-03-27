@@ -52,6 +52,34 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 __Note:__ I've actually included all files needed to compile the project in the git repo. You should be able to run the example even without `pod install`.
 
+### Creating a group of toggled (radio) buttons
+Use this when you want to create a group of radio buttons so that when one is selected (toggled on), the others will be automatically deselected (toggled off). Note that when a group is created, then toggledOffHandlers will not be called.
+
+```
+    firstButton = SKSpriteButton(imageNamed:"InActive")
+    firstButton.tappedTexture = SKTexture(imageNamed: "Active")
+    firstButton.isToggleMode = true
+    firstButton.isToggledOn = true      // Preload state
+    
+    // The assigned handler should not only handle firstButton toggled on
+    // but all other buttons in the group being toggled off
+    firstButton.addToggleOnHandler(handler: self.showTab1)  
+    
+    secondButton =  SKSpriteButton(imageNamed:"InActive")
+    secondButton.tappedTexture = SKTexture(imageNamed: "Active")
+    secondButton.isToggleMode = true
+    secondButton.isToggledOn = false      // Preload state
+    
+    // The assigned handler should not only handle secondButton toggled on
+    // but all other buttons in the group being toggled off
+    secondButton.addToggleOnHandler(handler: self.showTab2)
+
+    // Create a button group for each button
+    // This is so that each button automatically toggle off the remaining buttons
+    firstButton.addToggleGroup(button:secondButton)
+    secondButton.addToggleGroup(button:firstButton)
+```
+
 ## Requirements
 
 ## Installation
