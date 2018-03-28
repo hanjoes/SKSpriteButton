@@ -107,7 +107,7 @@ public class SKSpriteButton: SKSpriteNode {
     }
     
     /// Set the new color and maintain a copy of it for the current state
-    override public var color: UIColor? {
+    override public var color: UIColor {
         didSet {
             // Cache new state color
             stateColors[state] = color
