@@ -12,6 +12,7 @@ public class SKSpriteKitButtonGroup {
 
     // Assumes buttons are added in their correct toggle state
     public func addButton(_ button:SKSpriteButton) {
+        button.isToggleMode = true
         button.addEventListener(eventListener)
         toggleGroup.insert(button)
     }

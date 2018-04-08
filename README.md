@@ -1,29 +1,85 @@
 # SKSpriteButton
 
-[![CI Status](http://img.shields.io/travis/hanjoes/SKSpriteButton.svg?style=flat)](https://travis-ci.org/hanjoes/SKSpriteButton)
-[![Version](https://img.shields.io/cocoapods/v/SKSpriteButton.svg?style=flat)](http://cocoapods.org/pods/SKSpriteButton)
-[![License](https://img.shields.io/cocoapods/l/SKSpriteButton.svg?style=flat)](http://cocoapods.org/pods/SKSpriteButton)
-[![Platform](https://img.shields.io/cocoapods/p/SKSpriteButton.svg?style=flat)](http://cocoapods.org/pods/SKSpriteButton)
-
 ## Info
 
-SKSpriteButton is something obvious but somehow missing from the official SpriteKit library. 
+This is a fork from https://github.com/hanjoes/SKSpriteButton which reworks the state managemnet and event listeners. It also adds support for toggling buttons.
 
 ## Usage 
 
-This library should be very straightforward to use.
+SKSpriteButton will have **one** of these states:
+
+| State        | Description                                                                                              |
+|--------------|----------------------------------------------------------------------------------------------------------|
+| `.normal`    | Button is initialized to this state                                                                      |
+| `.tapped`    | On touch down event                                                                                      |
+| `.disabled`  | Button doesn't respond to user interaction                                                               |
+| `.toggledOn` | When toggle mode is true, the button will flip between normal and toggledOn state on each touch up event |
+
+You can set color, texture and eventListeners for any the button states. There can only be one color and/or texture for each state but ma have one or more eventListener for each state.
 
 ### Color
 
-Set `tappedColor` property for a different display color when tapped. 
+Set `color(SKColor, forState: StateType)` property for a different display color for a given state.
 
-Since this widget inherits from SKSpriteNode, which will only show texture if both `texture` and `color` are set. `tappedColor` will not be shown if the button has a texture.
+Since this widget inherits from SKSpriteNode, which will only show texture if both `texture` and `color` are set. `Color` will not be shown if the button has a texture.
 
 ### Texture
 
-Set `tappedTexture` property for displaying a different texture when tapped.
+Set `texture(SKTexture, forState: StateType)` property for displaying a different texture for a given state.
 
-### Move Types
+### Toggle Support
+
+Set `isToggleMode(Bool)` to enable toggling on button touchUp events.
+Set `ToggledOnState(Bool)` to pre-load a toggle state
+
+### EventListeners
+
+Add/Remove `EventListener(SKSpriteButtonEventListener)` register and de-register an event listener
+
+## Event Management
+
+### EventType
+
+| Supported Events     |
+|----------------------|
+| `.touchesMoved`      |
+| `.touchesEnded`      |
+| `.touchesCanceled`   |
+| `.touchesToggledOn`  |
+| `.touchesToggledOff` |
+
+### EventHandler
+
+This is a reference to a method call, eg. `self.fireBigFlippingGun` or `character.jumpUp`
+### Creating an Event Listener
+
+Initialize an event `SKSpriteButtonEventListener(handler: EventHandler, forEvent: EventType)`
+
+### Example
+
+```swift
+let button = SKSpriteButton(imageNamed:"InActive")
+button.setTexture(SKTexture(imageNamed: "Active"), forState: .toggledOn)
+button.isToggleMode = true
+button.setToggledOnState(true)
+button.addEventListener(SKSpriteButtonEventListener(handler: self.showTab, forEvent: .touchesToggledOn))
+```
+
+## Toggle Group
+
+You can group a set of buttons together so that when a single button it tapped, it toggles on and toggles off the remaining buttons.
+
+### Example
+
+```swift
+let toggleGroup = SKSpriteButtonGroup()
+toggleGroup.addButton(button1)
+toggleGroup.addButton(button2)
+```
+
+__Note: Ensure buttons are in their correct toggle state when adding them to the group by using `setToggledOnState(Bool)`__
+
+## Move Types
 
 Set `moveType` property for different move types supported move types are:
 
@@ -40,32 +96,13 @@ The names should be self-explainatory. But still I put a screencast for differen
 
 ![Demo](./ios_demo.gif)
 
-### More
-
-There is no more, check `SKSpriteButton.swift` for public APIs.
-
-## Example
-
-I've built a simple example project to elaborate on how to use this widget. The example project shows how "move types" differ from each other.
-
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
-__Note:__ I've actually included all files needed to compile the project in the git repo. You should be able to run the example even without `pod install`.
-
-## Requirements
-
 ## Installation
 
-SKSpriteButton is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
-
-```ruby
-pod 'SKSpriteButton'
-```
+Just copy the SKSpriteButton/Classes folder into your project and you are good to go.
 
 ## Author
 
-hanjoes, hanzhou87@gmail.com
+Nader Eloshaiker, https://github.com/nader-eloshaiker
 
 ## License
 
