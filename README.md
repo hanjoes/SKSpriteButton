@@ -48,14 +48,9 @@ Add/Remove `EventListener(SKSpriteButtonEventListener)` register and de-register
 | `.touchesToggledOn`  |
 | `.touchesToggledOff` |
 
-### EventHandler
-
-This is a reference to a method call, eg. `self.fireBigFlippingGun` or `character.jumpUp`
 ### Creating an Event Listener
 
 Initialize an event `SKSpriteButtonEventListener(handler: EventHandler, forEvent: EventType)`
-
-### Example
 
 ```swift
 let button = SKSpriteButton(imageNamed:"InActive")
@@ -63,6 +58,28 @@ button.setTexture(SKTexture(imageNamed: "Active"), forState: .toggledOn)
 button.isToggleMode = true
 button.setToggledOnState(true)
 button.addEventListener(SKSpriteButtonEventListener(handler: self.showTab, forEvent: .touchesToggledOn))
+```
+
+### EventHandler
+
+This is a reference to a method call, eg. `self.fireBigFlippingGun` or `character.jumpUp`
+
+### Creating an Event Handler
+
+Event handlers will pass in the touches, event and the button itself to the method associated with the specific event.
+
+```swift
+func showTab(touches: Set<UITouch>, event: UIEvent?, target: SKSpriteButton) {
+    guard let userData = target.userData else {
+        return
+    }
+
+    target.setDisabledState(true)
+
+    // do something with the user data
+
+    // do some game code
+}
 ```
 
 ## Toggle Group
